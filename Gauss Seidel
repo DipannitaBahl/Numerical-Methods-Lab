@@ -1,0 +1,60 @@
+#include <stdio.h>
+
+int main() {
+    int i, j, k, n, N;
+    double A[20][20], b[20], x[20], sum;
+
+    // Step 1: Input number of unknowns and iterations
+    printf("Enter number of unknowns: ");
+    scanf("%d", &n);
+
+    printf("Enter maximum number of iterations: ");
+    scanf("%d", &N);
+
+    // Step 2: Input coefficient matrix A
+    printf("Enter the elements of coefficient matrix A:\n");
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            printf("A[%d][%d] = ", i + 1, j + 1);
+            scanf("%lf", &A[i][j]);
+        }
+    }
+
+    // Step 3: Input right-hand side vector b
+    printf("Enter the elements of right-hand side vector b:\n");
+    for (i = 0; i < n; i++) {
+        printf("b[%d] = ", i + 1);
+        scanf("%lf", &b[i]);
+    }
+
+    // Step 4: Initialize x[i]
+    printf("Enter initial guesses for the solution vector x:\n");
+    for (i = 0; i < n; i++) {
+        printf("x[%d] = ", i + 1);
+        scanf("%lf", &x[i]);
+    }
+
+    // Step 5: Perform Gauss-Seidel iterations
+    for (k = 1; k <= N; k++) {
+        for (i = 0; i < n; i++) {
+            sum = b[i];
+            for (j = 0; j < n; j++) {
+                if (j != i)
+                    sum -= A[i][j] * x[j];
+            }
+            x[i] = sum / A[i][i];
+        }
+
+        // Display iteration results
+        printf("\nIteration %d: ", k);
+        for (i = 0; i < n; i++)
+            printf("%8.4lf ", x[i]);
+    }
+
+    // Step 6: Display final solution
+    printf("\n\nFinal approximate solution after %d iterations:\n", N);
+    for (i = 0; i < n; i++)
+        printf("x[%d] = %.4lf\n", i + 1, x[i]);
+
+    return 0;
+}
