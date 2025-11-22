@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    float a, r, error, E;
+    int i = 0, N;
+
+    // User input
+    printf("Enter initial guess: ");
+    scanf("%f", &a);
+    printf("Enter tolerance limit (e.g., 0.0001): ");
+    scanf("%f", &E);
+    printf("Enter maximum iterations: ");
+    scanf("%d", &N);
+
+    // Initialize error to a large number
+    error = 1.0;
+
+    // Iteration loop
+    while (error >= E && i <= N) {
+        float fa = (a * a) - 0.1;   // f(a) = x^2 - 0.1
+        float fpa = 2 * a;          // f'(a) = 2x
+
+        r = a - (fa / fpa);         // Newton-Raphson formula
+
+        error = fabs((a - r) / r);  // relative error
+        a = r;                      // update a
+        i = i + 1;
+    }
+
+    if (i > N) {
+        printf("ERROR: Root not found within iteration limit.\n");
+    } else {
+        printf("Approximate value of 1/sqrt(10): %.4f\n", r);  // 4 significant decimals
+        printf("Number of iterations: %d\n", i);
+    }
+
+    return 0;
+}
+
+
+Output:-
+Enter initial guess: 0.3
+Enter tolerance limit: 0.0001
+Enter maximum iterations: 50
+Approximate value of 1/sqrt(10): 0.3162
+Number of iterations: 4
